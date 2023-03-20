@@ -22,5 +22,5 @@ function throttling(fn, delay){
     }
 }
 
-const optimizedExpensive = throttling(Expensive, 0);
+const optimizedExpensive = throttling(Expensive, 400);
 window.addEventListener("resize", optimizedExpensive);
