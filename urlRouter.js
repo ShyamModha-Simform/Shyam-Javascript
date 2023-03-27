@@ -26,6 +26,10 @@ const handleLocation = async () => {
         const html = await fetch(route).then((data) => data.text());
         document.getElementById('root').innerHTML = html;
         return;
+    }else if(route === "/Search.html"){
+        const html = await fetch(route).then((data) => data.text());
+        document.getElementById("left_section").innerHTML = html;
+        return;
     }
 
     // To Display updated content into main_content box
