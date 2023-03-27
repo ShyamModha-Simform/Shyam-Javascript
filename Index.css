@@ -9,7 +9,25 @@
   width: 100vw;
   height: 100vh;
   position: relative;
+  font-family: 'Figtree', sans-serif;
 }
+
+::-webkit-scrollbar {
+    display: none;
+    background-color: rgb(255, 255, 255);
+    width: 0.5rem;
+    height: 0.4rem;
+  }
+
+  ::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: darkgrey;
+    border: 1px solid slategrey;
+    border-radius: 1rem;
+  }
 
 /* Navbar */
 .nav_bar_wrapper {
@@ -71,6 +89,12 @@ hr {
   /* background-color: #121212; */
   height: 100vh;
   overflow-y: auto;
+  color: white;
+}
+
+.home_content {
+    display: flex;
+    justify-content: center;
 }
 
 /* Stick header */
@@ -143,13 +167,13 @@ hr {
 }
 
 .userlogo_icon {
-  width: 1.6rem;
-  height: 1.6rem;
+  width: 1.8rem;
+  height: 1.8rem;
   border-radius: 50%;
   background-color: #535353;
 }
 .userlogo_icon > img {
-  width: 1.5rem;
+  width: 1.7rem;
   object-fit: contain;
 }
 
@@ -176,6 +200,7 @@ hr {
 
 /* Footer -- Left Section */
 .footer_section {
+    min-width: fit-content;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -203,6 +228,7 @@ hr {
   flex-direction: column;
   align-items: center;
   margin: 0.5rem;
+  min-width: fit-content;
 }
 
 .music_bar_details {
@@ -237,6 +263,8 @@ hr {
 /* Footer -- Right Section */
 
 .footer_right_section {
+  min-width: fit-content;
+
   margin: 0.5rem;
   display: flex;
   flex-direction: row;
@@ -307,4 +335,77 @@ hr {
     width: 35px;
     margin: 2px;
     object-fit: contain;
+}
+
+/* Card's row styles */
+
+.content_row_wrapper {
+    /* background-color: #1F1F1F; */
+    /* filter: blur(10px); */
+    width: 100%;
+    color: #ffffff;
+}
+
+.content_row_container {
+    background-color: transparent;
+    display: flex;
+    flex-direction: column;
+    margin: 1.5rem;
+    /* margin-inline: 20px; */
+    
+}
+
+.row_titles {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-block-end: 1.8rem;
+
+}
+
+.row_titles > span {
+    /* font-size: 1rem; */
+}
+
+.row_cards {
+    display: flex;
+    gap: 1rem;
+    overflow-x: auto;
+    cursor: grab;
+}
+
+.grabbing {
+    cursor: grabbing;
+}
+
+.card_container {
+    
+    display: flex;
+    flex-direction: column;
+    min-width: 11rem;
+    padding: 1rem;
+    border-radius: 0.55rem;
+    /* border: 1rem solid #272727; */
+    background-color: #171717;
+    flex-grow: 1;
+    
+}
+
+.card_container:hover {
+    background-color: #272727;
+}
+
+.card_image {
+    width: 100%;
+    border-radius: 0.25rem;
+    object-fit: contain;
+}
+
+.card_heading {
+    margin-block: 1rem;
+}
+
+.list_name {
+    font-size: 32px;
+    font-weight: 700;
 }
