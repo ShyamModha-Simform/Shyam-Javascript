@@ -9,37 +9,44 @@
   width: 100vw;
   height: 100vh;
   position: relative;
-  font-family: 'Figtree', sans-serif;
+  font-family: "Figtree", sans-serif;
 }
 
 ::-webkit-scrollbar {
-    display: none;
-    background-color: rgb(255, 255, 255);
-    width: 0.5rem;
-    height: 0.4rem;
-  }
+  display: none;
+  background-color: rgb(255, 255, 255);
+  width: 0.5rem;
+  height: 0.4rem;
+}
 
-  ::-webkit-scrollbar-track {
-    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-  }
+::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+}
 
-  ::-webkit-scrollbar-thumb {
-    background-color: darkgrey;
-    border: 1px solid slategrey;
-    border-radius: 1rem;
-  }
+::-webkit-scrollbar-thumb {
+  background-color: darkgrey;
+  border: 1px solid slategrey;
+  border-radius: 1rem;
+}
 
 /* Navbar */
 .nav_bar_wrapper {
   position: sticky;
-  width: 15rem;
   top: 0;
   /* bottom: 0; */
   z-index: 1;
   background-color: #000000;
-  /* min-width: 15rem; */
+  min-width: 12rem;
   flex-grow: 0.1;
   padding: 1.5rem;
+  /* From https://css.glass */
+
+  /* background: rgba(18, 18, 18, 0.53);
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(13.1px);
+  -webkit-backdrop-filter: blur(13.1px);
+  border: 1px solid rgba(18, 18, 18, 0.2); */
 }
 .nav_bar_container {
   display: flex;
@@ -75,6 +82,14 @@ a {
   margin-inline-end: 0.4rem;
 }
 
+/* To toogle this using JS below class will be used */
+.side_menu {
+  height: inherit;
+  display: block;
+  position: absolute;
+  z-index: 3;
+}
+
 hr {
   width: 50%;
   margin-block: 0.8rem;
@@ -82,7 +97,7 @@ hr {
   border-top-width: 0.2rem;
 }
 
-/* Dynamic Content */
+/*------------ Dynamic Content---------------------- */
 
 #dynamic_content {
   background: linear-gradient(to bottom, #152643, #121212);
@@ -93,13 +108,12 @@ hr {
 }
 
 .home_content {
-    display: flex;
-    justify-content: center;
+  display: flex;
+  justify-content: center;
 }
 
-/* Stick header */
+/*----------- Sticky header------------------ */
 .content_box {
-  /* display: flex; */
   width: 100vw;
   background-color: #121212;
   position: relative;
@@ -119,9 +133,11 @@ hr {
   justify-content: space-between;
 }
 
+/* Sticky header -- left section */
+
 .left_section {
   display: flex;
-  margin-inline-start: 2rem;
+  margin-inline-start: min(2rem, 10px);
   align-items: center;
 }
 
@@ -129,17 +145,17 @@ hr {
   display: flex;
   margin-inline-end: 1.5rem;
 }
+
 .header_back_arrow,
 .header_forward_arrow {
   width: 2rem;
   height: 2rem;
+  margin: 0.7rem 1rem;
+
   background-color: rgb(8, 4, 19);
   border-radius: 50%;
   display: flex;
   align-items: center;
-  /* gap: 2rem; */
-  margin: 0.7rem 1rem;
-  /* justify-content: center; */
 }
 
 .header_back_arrow > img {
@@ -160,7 +176,6 @@ hr {
   align-items: center;
   padding: 0.2rem;
   border-radius: 1.5rem;
-  /* padding: 0.5rem 1.5rem; */
 }
 .header_username_button > span {
   margin-inline: 0.8rem;
@@ -177,7 +192,7 @@ hr {
   object-fit: contain;
 }
 
-/* Footer */
+/* -----------------------Footer------------------------- */
 
 .footer_wrapper {
   width: 100%;
@@ -190,7 +205,6 @@ hr {
 }
 
 .footer_container {
-  /* width: 100%; */
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -200,7 +214,7 @@ hr {
 
 /* Footer -- Left Section */
 .footer_section {
-    min-width: fit-content;
+  min-width: fit-content;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -242,14 +256,12 @@ hr {
   min-width: 15rem;
   height: 0.3rem;
   border-radius: 1rem;
-  /* margin-block: ; */
 }
 
 .music_player_control {
   display: flex;
   flex-direction: row;
   align-items: center;
-  /* margin-block-start: 0.2rem; */
 }
 .music_player_controller_icon {
   object-fit: contain;
@@ -289,7 +301,7 @@ hr {
   background: linear-gradient(to bottom, #152643, #121212);
 }
 
-/* Navigation bar */
+/* ----------Input box for Search file--------------- */
 
 .navigation-search {
   min-width: 192px;
@@ -327,85 +339,182 @@ hr {
 }
 
 .search_icon_container {
-    display: flex;
-    align-items: center;
-    margin-inline-start: 10px;
+  display: flex;
+  align-items: center;
+  margin-inline-start: 10px;
 }
 .search_icon {
-    width: 35px;
-    margin: 2px;
-    object-fit: contain;
+  width: 35px;
+  margin: 2px;
+  object-fit: contain;
 }
 
-/* Card's row styles */
+/* ------------Card's row styles------- */
 
 .content_row_wrapper {
-    /* background-color: #1F1F1F; */
-    /* filter: blur(10px); */
-    width: 100%;
-    color: #ffffff;
+  width: 100%;
+  color: #ffffff;
 }
 
 .content_row_container {
-    background-color: transparent;
-    display: flex;
-    flex-direction: column;
-    margin: 1.5rem;
-    /* margin-inline: 20px; */
-    
+  background-color: transparent;
+  display: flex;
+  flex-direction: column;
+  margin: 1.5rem;
 }
 
 .row_titles {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    margin-block-end: 1.8rem;
-
-}
-
-.row_titles > span {
-    /* font-size: 1rem; */
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-block-end: 1.8rem;
+  align-items: center;
 }
 
 .row_cards {
-    display: flex;
-    gap: 1rem;
-    overflow-x: auto;
-    cursor: grab;
-}
-
-.grabbing {
-    cursor: grabbing;
+  display: flex;
+  gap: 1rem;
+  overflow-x: auto;
+  cursor: grab;
 }
 
 .card_container {
-    
-    display: flex;
-    flex-direction: column;
-    min-width: 11rem;
-    padding: 1rem;
-    border-radius: 0.55rem;
-    /* border: 1rem solid #272727; */
-    background-color: #171717;
-    flex-grow: 1;
-    
+  display: flex;
+  flex-direction: column;
+  min-width: 9rem;
+  padding: 1rem;
+  border-radius: 0.55rem;
+  /* border: 1rem solid #272727; */
+  background-color: #171717;
+  flex-grow: 1;
 }
 
 .card_container:hover {
-    background-color: #272727;
+  background-color: #272727;
 }
 
 .card_image {
-    width: 100%;
-    border-radius: 0.25rem;
-    object-fit: contain;
+  width: 100%;
+  border-radius: 0.25rem;
+  object-fit: contain;
 }
 
 .card_heading {
-    margin-block: 1rem;
+  margin-block: 1rem;
 }
 
 .list_name {
-    font-size: 32px;
-    font-weight: 700;
+  font-size: 32px;
+  font-weight: 700;
+}
+
+/* Used in Javascript to implement scroll by dragging  */
+.grabbing {
+  cursor: grabbing;
+}
+
+/* Header for smaller screen sizes */
+
+.responsive_header {
+  display: none;
+  justify-content: space-between;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  height: fit-content;
+  color: white;
+  padding: 0.5rem;
+}
+
+/* Hamburger -- Menu button */
+.hamburger_container {
+  width: 2.5rem;
+  height: 2.5rem;
+}
+
+.hamburger_stick {
+  margin-block: 0.5rem;
+  width: 2.2rem;
+  background-color: #ffffff;
+  border-radius: 2px;
+
+  display: block;
+  position: absolute;
+  height: 5px;
+  /* width: 100%; */
+  border-radius: 9px;
+  transform: rotate(0deg);
+  transition: 0.25s ease-in-out;
+}
+
+.hamburger_container span:nth-child(1) {
+  top: 5px;
+  transform-origin: left center;
+}
+
+.hamburger_container span:nth-child(2) {
+  top: 17px;
+  transform-origin: left center;
+}
+
+.hamburger_container span:nth-child(3) {
+  top: 29px;
+  transform-origin: left center;
+}
+
+.hamburger_container.open span:nth-child(1) {
+  transform: rotate(45deg);
+}
+
+.hamburger_container.open span:nth-child(2) {
+  width: 0%;
+  opacity: 0;
+}
+
+.hamburger_container.open span:nth-child(3) {
+  transform: rotate(-45deg);
+}
+
+/* To toggle menu div */
+.side_menu {
+  height: inherit;
+  display: block;
+  position: absolute;
+  z-index: 3;
+}
+
+
+/* -------------------------For screen sizes less than 875px-------------- */
+@media screen and (max-width: 875px) {
+  .nav_bar_wrapper,
+  .footer_section,
+  .footer_right_section {
+    display: none;
+  }
+
+  .responsive_header {
+    display: flex;
+  }
+
+  .side_menu {
+    height: inherit;
+    display: block;
+    position: absolute;
+    z-index: 3;
+  }
+
+  .footer_wrapper {
+    display: flex;
+    justify-content: center;
+  }
+
+  .nav_bar_wrapper {
+    background: rgba(18, 18, 18, 0.53);
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(13.1px);
+  -webkit-backdrop-filter: blur(13.1px);
+  border: 1px solid rgba(18, 18, 18, 0.2);
+  }
 }

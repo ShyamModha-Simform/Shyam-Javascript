@@ -11,6 +11,7 @@
           ></path>
         </svg>
       </div>
+      
 
       <!-- Section 1 -->
       <div class="nav_bar_section">
@@ -28,9 +29,24 @@
     </div>
   </div>
 
-  <!-- Main Content Display -->
+  <!-- Main Content Display------------- -->
   <div class="content_box">
+
+    <!-- Responsive_headers -- only visible on screens smaller than 875px -->
+    <div class="responsive_header">
+      <h1>Spotify</h1>
+
+      <!-- Menu button -->
+      <div id="hamburger_menu" class="hamburger_container">
+        <span class="hamburger_stick"></span>
+        <span class="hamburger_stick"></span>
+        <span class="hamburger_stick"></span>
+      </div>
+    </div>
+
+    <!-- Main content -- header -->
     <div class="content_box_header">
+      <!-- Header -- left -->
       <div class="left_section" id="left_section">
         <div class="header_back_arrow">
           <img src="../Assests/back-page.png" alt="" />
@@ -39,6 +55,7 @@
           <img src="../Assests/right_arrow.png" alt="" />
         </div>
       </div>
+      <!-- Header -- middle -->
       <div class="right_section">
         <div>
           <button class="header_username_button">
@@ -50,10 +67,12 @@
         </div>
       </div>
     </div>
+
+    <!-- Main -- Dynamic Content render AS SPA -->
     <div id="dynamic_content">
         <div class="home_content">
-
-            <h1>Good Morning</h1>
+          
+            <h1>Good Morning, Home</h1>
         </div>
     </div>
   </div>
@@ -61,6 +80,8 @@
   <!-- Footer -->
   <div class="footer_wrapper">
     <div class="footer_container">
+
+      <!-- Footer -- Left Section -->
       <div class="footer_section">
         <div class="music_image_container">
           <img
@@ -77,6 +98,8 @@
           <img src="../Assests/like.png" alt="" class="like_logo" />
         </div>
       </div>
+
+      <!-- Footer -- middle section -->
       <div class="footer_middle_section">
         <div class="music_player_control">
           <div class="left">
@@ -107,14 +130,14 @@
           <div>3.32</div>
         </div>
       </div>
+
+      <!-- Footer -- Right Section -->
       <div class="footer_right_section">
-        <!-- <div class="sound_speaker"> -->
         <img
           src="../Assests/sound_speaker.png"
           alt=""
           class="music_player_controller_icon"
         />
-        <!-- </div> -->
         <div class="sound_bar"></div>
       </div>
     </div>
