@@ -1,11 +1,80 @@
 // --------------Global DOM imports-------------
 // For Slider
+const sliderContainer = document.querySelector('.slider');
+const sliderDots = document.querySelector('.slider-dots');
 const slides = document.getElementsByClassName("slider-item");
 const nextButton = document.getElementById("slider-button-next");
 const prevButton = document.getElementById("slider-button-prev");
 const dots = document.getElementsByClassName("dot");
 let position = 0;
-const numberOfSlides = slides.length;
+// const numberOfSlides = slides.length;
+console.log()
+
+const sliderImageDetails = [
+  {
+    imageURL: "https://images.unsplash.com/photo-1537211261771-e525b9e4049b?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=600&h=450&q=80",
+    placeholder: "Squirrel zombie",
+    className: `slider-item slider-item-visible`,
+    radioButtonChecked: "checked",
+  },
+  {
+    imageURL: "https://images.unsplash.com/photo-1503925802536-c9451dcd87b5?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=600&h=450&q=80",
+    placeholder: "Squirrel zombie",
+    className: "slider-item",
+    radioButtonChecked: "",
+
+  },
+  {
+    imageURL: "https://images.unsplash.com/photo-1509558567730-6c838437b06b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=600&h=450&q=80",
+    placeholder: "Squirrel zombie",
+    className: "slider-item",
+    radioButtonChecked: "",
+  },
+  {
+    imageURL: "https://images.unsplash.com/photo-1509558567730-6c838437b06b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=600&h=450&q=80",
+    placeholder: "Squirrel zombie",
+    className: "slider-item",
+    radioButtonChecked: "",
+  },
+  {
+    imageURL: "https://images.unsplash.com/photo-1509558567730-6c838437b06b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=600&h=450&q=80",
+    placeholder: "Squirrel zombie",
+    className: "slider-item",
+    radioButtonChecked: "",
+  },
+  {
+    imageURL: "https://images.unsplash.com/photo-1509558567730-6c838437b06b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=600&h=450&q=80",
+    placeholder: "Squirrel zombie",
+    className: "slider-item",
+    radioButtonChecked: "",
+  }
+];
+
+const sliderItemMarkup = ({imageURL, placeholder, className}) => {
+  // console.log(className);
+  let div = document.createElement("div");
+  div.className = className;
+  div.innerHTML =  `<img src=${imageURL} alt=${placeholder}/>`;
+  sliderContainer.appendChild(div);
+  return ;
+};
+
+const sliderDotsMarkup = ({radioButtonChecked}) => {
+  console.log(`<input class="dot selected-dot" type="radio" name="dot" ${radioButtonChecked} />`, radioButtonChecked)
+  sliderDots.innerHTML += `<input class="dot selected-dot" type="radio" name="dot" ${radioButtonChecked} />`;
+  return ;
+};
+
+sliderImageDetails.forEach(ele => {
+  // console.log(typeof sliderItemMarkup(ele))
+  sliderItemMarkup(ele);
+  // console.log(sliderContainer, "Container");
+  
+  sliderDotsMarkup(ele);
+  console.log(sliderDots, "Dots");
+
+  // console.log("Adding Slider Images....", ele);
+});
 
 // For Scrolling
 let mybutton = document.getElementById("myBtn");
@@ -24,7 +93,7 @@ const handleMoveToNextSlide = function (e) {
   hideAllSlides();
 
   // check if last slide has been reached
-  if (position === numberOfSlides - 1) {
+  if (position === slides.length - 1) {
     position = 0; // go back to first slide
   } else {
     // move to next slide
@@ -43,7 +112,7 @@ const handleMoveToPrevSlide = function (e) {
 
   // check if we're on the first slide
   if (position === 0) {
-    position = numberOfSlides - 1; // move to the last slide
+    position = slides.length - 1; // move to the last slide
   } else {
     // move back one
     position--;
@@ -84,7 +153,7 @@ function topFunction() {
 // ------------ Helper Function to scroll to any particular element------
 
 for (const ele of links) {
-  console.log(ele);
+  // console.log(ele);
   ele.addEventListener("click", () => {
     scrolldiv(ele.getAttribute("data-custom-value"));
   });
