@@ -1,0 +1,101 @@
+* {
+    font-family: 'Poppins', sans-serif;
+}
+
+.slider {
+    /* max-width: auto */
+    width: 100%;
+    height: fit-content;
+    position: relative;
+    margin: 0 auto;
+}
+
+.slider .slider-item,
+.slider .slider-item-hidden {
+    display: none; /* hide all slide images not currently being viewed */
+}
+
+.slider .slider-item-visible {
+    display: block; /* show current slide image */
+    animation: fadeVisibility 0.5s; /* for fading effect when switching between slides */
+}
+
+.slider .slider-item img {
+    width: 100%;
+    min-width: 384px;
+    height: auto;
+}
+
+/* Navigation control styles */
+.slider .slider-actions {
+    display: flex;
+    width: 100%;
+    justify-content: space-between; /* put space between the navigation buttons */
+    position: absolute; /* position navigation buttons on top */
+    top: 50%; /* center navigation buttons on the slide */
+    transform: translateY(-50%); /* align navigation buttons */
+}
+
+.slider .slider-actions button {
+    border-radius: 50px;
+    background-color: white;
+    border: 0;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+}
+
+.slider .slider-actions button#slider-button-prev {
+    margin-left: 20px; /* prevent previous button from touching the side*/
+}
+
+.slider .slider-actions button#slider-button-next {
+    margin-right: 20px;  /* prevent next button from touching the side*/
+}
+
+.slider-dots {
+    text-align: center; 
+}
+
+.dot {
+    opacity: 0.7; /* gray out dots for slides not being visted */
+}
+
+.dot:focus {
+    border: 1px solid black; /* dot for currently visited slide */
+}
+
+/* hanlde smooth transitions between slides */
+@keyframes fadeVisibility {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+#myBtn {
+    display: none; /* Hidden by default */
+    position: fixed; /* Fixed/sticky position */
+    bottom: 30px; /* Place the button at the bottom of the page */
+    right: 30px; /* Place the button 30px from the right */
+    z-index: 99; /* Make sure it does not overlap */
+    border: none; /* Remove borders */
+    outline: none; /* Remove outline */
+    background-color: rgb(220,53,69); /* Set a background color */
+    color: white; /* Text color */
+    cursor: pointer; /* Add a mouse pointer on hover */
+    
+    border-radius: 50%; /* Rounded corners */
+    font-size: 22px;
+    width: 48px;
+    height: 48px;
+    transform: rotate(-90deg);
+  }
+  
+  #myBtn:hover {
+    background-color: #555; /* Add a dark-grey background on hover */
+  }
