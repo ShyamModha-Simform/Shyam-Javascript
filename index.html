@@ -12,11 +12,12 @@
       href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700&display=swap"
       rel="stylesheet"
     />
+    <link rel="icon" href="/images/favicon.png" />
     <link rel="stylesheet" href="car.css" />
     <title>Travel Website</title>
   </head>
   <body>
-    <!-- Overlay -->
+    <!-------------- Overlay -- Using Bootstrap --------------------->
     <div
       class="modal fade"
       id="exampleModal"
@@ -64,12 +65,13 @@
         </div>
       </div>
     </div>
-
-    <!-- Navbar -->
+    
+    <!------------------ Navbar ------------------------------------->
     <nav
       class="navbar navbar-expand-lg navbar-dark bg-dark text-white sticky-top"
-      id="home">
-      <div class="container" >
+      id="home"
+    >
+      <div class="container">
         <a class="navbar-brand h2" href="#"
           ><span class="text-danger h1">Travel</span>Spot</a
         >
@@ -78,35 +80,52 @@
           type="button"
           data-bs-toggle="collapse"
           data-bs-target="#navbarSupportedContent"
-          aria-controls="navbarSupportedContent"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
         >
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            <li class="nav-item">
+            <li
+              class="nav-item"
+              data-bs-toggle="collapse"
+              data-bs-target="#navbarSupportedContent"
+            >
               <button class="btn nav-link" data-custom-value="home">
                 Home
               </button>
             </li>
-            <li class="nav-item">
+            <li
+              class="nav-item"
+              data-bs-toggle="collapse"
+              data-bs-target="#navbarSupportedContent"
+            >
               <button class="btn nav-link" data-custom-value="book">
                 Book
               </button>
             </li>
-            <li class="nav-item">
+            <li
+              class="nav-item"
+              data-bs-toggle="collapse"
+              data-bs-target="#navbarSupportedContent"
+            >
               <button class="btn nav-link" data-custom-value="about">
                 About
               </button>
             </li>
-            <li class="nav-item">
+            <li
+              class="nav-item"
+              data-bs-toggle="collapse"
+              data-bs-target="#navbarSupportedContent"
+            >
               <button class="btn nav-link" data-custom-value="packages">
                 Packages
               </button>
             </li>
-            <li class="nav-item dropdown">
+            <li
+              class="nav-item dropdown"
+              data-bs-toggle="collapse"
+              data-bs-target="#navbarSupportedContent"
+            >
               <button
                 class="btn nav-link dropdown-toggle"
                 id="navbarDropdown"
@@ -145,7 +164,7 @@
       </div>
     </nav>
 
-    <!-- Image -->
+    <!-------------------- Image ------------------------------------>
 
     <section class="bg-dark p-5">
       <div
@@ -168,59 +187,19 @@
 
         <!-- Carousel -->
         <div class="slider">
-          <!-- <div class="slider-item slider-item-visible ">
-            <img
-              src="https://images.unsplash.com/photo-1537211261771-e525b9e4049b?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=600&h=450&q=80"
-              alt="Squirrel zombie"
-            />
-          </div>
-          <div class="slider-item">
-            <img
-              src="https://images.unsplash.com/photo-1503925802536-c9451dcd87b5?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=600&h=450&q=80"
-              alt="Zombie hands"
-            />
-          </div>
-          <div class="slider-item">
-            <img
-              src="https://images.unsplash.com/photo-1509558567730-6c838437b06b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=600&h=450&q=80"
-              alt="Zombie pumpkin"
-            />
-          </div>
-          <div class="slider-item">
-            <img
-              src="https://images.unsplash.com/photo-1509558567730-6c838437b06b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=600&h=450&q=80"
-              alt="Zombie pumpkin"
-            />
-          </div>
-          <div class="slider-item">
-            <img
-              src="https://images.unsplash.com/photo-1509558567730-6c838437b06b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=600&h=450&q=80"
-              alt="Zombie pumpkin"
-            />
-          </div>
-          <div class="slider-item">
-            <img
-              src="https://images.unsplash.com/photo-1509558567730-6c838437b06b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=600&h=450&q=80"
-              alt="Zombie pumpkin"
-            />
-          </div> -->
+          <!-- Dynamically -- Script will add Image Nodes -->
           <div class="slider-actions">
             <button id="slider-button-prev" aria-label="Previous"><</button>
             <button id="slider-button-next" aria-label="Next">></button>
           </div>
           <div class="slider-dots">
-            <!-- <input class="dot selected-dot" type="radio" name="dot" checked />
-            <input class="dot" type="radio" name="dot" />
-            <input class="dot" type="radio" name="dot" />
-            <input class="dot" type="radio" name="dot" />
-            <input class="dot" type="radio" name="dot" />
-            <input class="dot" type="radio" name="dot" /> -->
+            <!-- Dynamically -- Script will add radio buttons -->
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Subscribtion section -->
+    <!-------------- Subscribtion section -------------------------->
 
     <section class="pt-5 bg-light" id="book">
       <div
@@ -246,7 +225,7 @@
       </div>
     </section>
 
-    <!-- Cards -->
+    <!------------------------- Package Cards -------------------------->
 
     <section class="p-1 p-md-5" id="packages">
       <div class="container">
@@ -301,7 +280,7 @@
       </div>
     </section>
 
-    <!-- Info -->
+    <!------------------------ Information ------------------------>
     <section class="bg-dark text-light p-5">
       <div class="container">
         <div class="row gap-5 text-center">
@@ -337,7 +316,7 @@
       </div>
     </section>
 
-    <!-- accredion -->
+    <!------------------------ Accredion ------------------------>
 
     <section class="p-5" id="services">
       <div
@@ -432,7 +411,7 @@
       </div>
     </section>
 
-    <!-- footer -->
+    <!------------------------ Footer ----------------------------------->
     <section class="bg-dark text-light" id="about">
       <div class="container pt-5 pb-3">
         <div class="row justify-content-center">
@@ -526,9 +505,11 @@
       </div>
     </section>
 
-    <button onclick="topFunction()" id="myBtn" title="Go to top">></button>
+    <!------------------------ SCROLL TO TOP ------------------------>
+    <button id="myBtn" title="Go to top">></button>
 
-    <script src="car.js" defer></script>
+    <!-- ---------------------- Scripts --------------------------------- -->
+    <script src="car.js" type="module"></script>
     <script
       src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
       integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p"
