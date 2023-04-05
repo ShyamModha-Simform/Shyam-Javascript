@@ -20,13 +20,101 @@
   </head>
   <body>
     <div class="root">
+      <!-- MODAL TO EDIT PRODUCT -->
+      <!-- Modal -->
+      <div
+        class="modal fade"
+        id="staticBackdrop"
+        data-bs-backdrop="static"
+        data-bs-keyboard="false"
+        tabindex="-1"
+        aria-labelledby="staticBackdropLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="staticBackdropLabel" >Update Product</h5>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div class="modal-body">
+              <div class="input-form-container w-100 m-auto update-form">
+                <div class="form-floating mb-3">
+                  <input
+                    type="text"
+                    class="form-control product-name-input"
+                    id="floatingInput"
+                    placeholder="Product Name.."
+                  />
+                  <label for="floatingInput">Product Name</label>
+                </div>
+        
+                <div class="form-floating mb-3">
+                  <input
+                    type="text"
+                    class="form-control product-id-input"
+                    id="floatingInput"
+                    placeholder="Product ID.."
+                  />
+                  <label for="floatingInput">Product ID</label>
+                </div>
+        
+                <div class="mb-3">
+                  <label for="formFile" class="form-label">Product Image</label>
+                  <input
+                    class="form-control product-image-input"
+                    type="file"
+                    id="formFile"
+                  />
+                </div>
+        
+                <div class="form-floating mb-3">
+                  <input
+                    type="number"
+                    class="form-control product-price-input"
+                    id="floatingInput"
+                    placeholder="Product Price.."
+                  />
+                  <label for="floatingInput">Product Price</label>
+                </div>
+        
+                <div class="form-floating mb-3">
+                  <textarea
+                    class="form-control product-details-input"
+                    placeholder="Leave a comment here"
+                    id="floatingTextarea2"
+                    style="height: 100px"
+                  ></textarea>
+                  <label for="floatingTextarea2">Product Details</label>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-bs-dismiss="modal"
+              >
+                Close
+              </button>
+              <button type="button" class="btn btn-info submit-updated-product" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Update</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <!-- HEADER -->
       <div class="header text-center m-3">
         <h1>Product Management System</h1>
       </div>
 
       <!-- INPUT FORM -->
-      <div class="input-form-container w-50 m-auto">
+      <div class="input-form-container w-50 m-auto add-product-form">
         <div class="form-floating mb-3">
           <input
             type="text"
@@ -49,7 +137,11 @@
 
         <div class="mb-3">
           <label for="formFile" class="form-label">Product Image</label>
-          <input class="form-control product-image-input" type="file" id="formFile" />
+          <input
+            class="form-control product-image-input"
+            type="file"
+            id="formFile"
+          />
         </div>
 
         <div class="form-floating mb-3">
@@ -71,12 +163,16 @@
           ></textarea>
           <label for="floatingTextarea2">Product Details</label>
         </div>
-        <button type="submit" class="btn btn-primary product-submit">Submit</button>
+        <button type="submit" class="btn btn-primary product-submit">
+          Submit
+        </button>
       </div>
-    <!-- Cards Section -->
+      <!-- Cards Section -->
       <div class="cards-container m-3">
-        <div class="row row-cols-1 row-cols-sm-3 row-cols-md-4 row-cols-lg-5 g-4 cards-wrapper">
-            <!-- Fetching Cards using JavaScript -->
+        <div
+          class="row row-cols-1 row-cols-sm-3 row-cols-md-4 row-cols-lg-5 g-4 cards-wrapper"
+        >
+          <!-- Fetching Cards using JavaScript -->
         </div>
       </div>
     </div>

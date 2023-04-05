@@ -3,11 +3,8 @@
 
 class Model {
   constructor() {
-    this.productData = [];
+    this.productData = JSON.parse(localStorage.getItem("productData")) || [];
     // console.log(Array.isArray((localStorage.getItem('productData'))));
-    if (Array.isArray(JSON.parse(localStorage.getItem("productData")))) {
-      this.productData = JSON.parse(localStorage.getItem("productData"));
-    }
   }
 
   setProductData(product) {
@@ -19,9 +16,13 @@ class Model {
     return this.productData;
   }
 
-  deleteProductData(id) {
-      this.productData = this.productData.filter(product => product.productID !== id);
-      console.log(this.productData, id)
+  deleteProductData() {
+    console.log(this.productData, "=== delete in Model===");
+    localStorage.setItem("productData", JSON.stringify(this.productData));
+  }
+
+  updateProductData() {
+    console.log(this.productData, "=== updated product data===");
     localStorage.setItem("productData", JSON.stringify(this.productData));
   }
 }
@@ -39,36 +40,73 @@ class View {
 
   //   ----------------____Reading data from form and Adding to global array___-----------------
 
-  readDataFromInputs() {
+  readDataFromInputs(classPrefix) {
+    // const classPrefix = `.add-product-form > div > `;
     return {
-      productName: document.querySelector(".product-name-input").value,
-      productID: document.querySelector(".product-id-input").value,
-      productPrice: document.querySelector(".product-price-input").value,
-      productDetails: document.querySelector(".product-details-input").value,
-      productImage: document.querySelector(".product-image-input").value,
+      productName: document.querySelector(`${classPrefix}.product-name-input`).value,
+      productID: document.querySelector(`${classPrefix}.product-id-input`).value.trim(),
+      productPrice: document.querySelector(`${classPrefix}.product-price-input`).value,
+      productDetails: document.querySelector(`${classPrefix}.product-details-input`).value,
+      productImage: document.querySelector(`${classPrefix}.product-image-input`).value,
     };
   }
-//   ----------_ Event Handlers--------
+
+  fillExistingDataIntoEditForm(product) {
+    const classPrefix = `.update-form > div > `;
+    document.querySelector(`${classPrefix}.product-name-input`).value = product.productName;
+    document.querySelector(`${classPrefix}.product-id-input`).value = product.productID;
+    document.querySelector(`${classPrefix}.product-price-input`).value = product.productPrice;
+    document.querySelector(`${classPrefix}.product-details-input`).value = product.productDetails;
+    document.querySelector(`${classPrefix}.product-image-input`).value = product.productImage;
+  }
+  //   ----------_ Event Handlers--------
   onSubmitEvent() {
     console.log(this.submitForm);
     this.submitForm.addEventListener("click", (e) => {
       // context
-      console.log("Onclick performed", this.readDataFromInputs());
-      this.controller.setDataIntoModel(this.readDataFromInputs());
+      // console.log("Onclick performed", this.readDataFromInputs(`.add-product-form > div > `));
+      this.controller.setDataIntoModel(this.readDataFromInputs(`.add-product-form > div > `));
       this.renderCardsView(model);
     });
   }
 
-  onDeleteClick(){
-    this.deleteButtons = document.querySelectorAll(".delete-button");
-    this.deleteButtons.forEach(deleteBtn => {
-        deleteBtn.addEventListener('click', (e)=>{
-            // Be aware when changing `markUpHelper`
-            const id = (Array.from(deleteBtn.parentElement.children)[2]).innerText; 
-            this.controller.deleteProduct(id);
-        })
+  onEditButtonClick() {
+    this.editButtons = document.querySelectorAll(".edit-button");
+    this.editButtons.forEach((editBtn) => {
+      editBtn.addEventListener("click", (e) => {
+        // Be aware when changing `markUpHelper`
+        this.selectedProductID = editBtn.getAttribute("data-custom-id")
+        console.log("=== Edit button ===", this.selectedProductID)
+        let productBuffer = this.controller.findProduct( this.selectedProductID);
+        console.log("=== product buffer object ===", productBuffer)
+        this.fillExistingDataIntoEditForm(productBuffer);
+
+        this.onUpdateButtonClick();
+        // this.controller.deleteProduct(id);
+        // this.controller.updateProduct({}, );
+      });
     });
-  }  
+  }
+
+  onUpdateButtonClick(){
+    const submitUpdates = document.querySelector(".submit-updated-product");
+    console.log(submitUpdates);
+    submitUpdates.addEventListener("click", ()=>{
+      this.controller.updateProduct(this.readDataFromInputs(`.update-form > div >`),this.selectedProductID)
+      this.renderCardsView(this.controller.model);
+    })
+  }
+
+  onDeleteClick(_id) {
+    this.deleteButtons = document.querySelectorAll(".delete-button");
+    this.deleteButtons.forEach((deleteBtn) => {
+      deleteBtn.addEventListener("click", (e) => {
+        // Be aware when changing `markUpHelper`
+        const id = deleteBtn.getAttribute("data-custom-id")
+        this.controller.deleteProduct(id);
+      });
+    });
+  }
 
   init(model) {
     console.log(model);
@@ -77,15 +115,20 @@ class View {
       this.cardsWrapper.innerHTML += this.markUpHelper(element);
     });
 
+    // registering event listeners at first initialization
     this.onSubmitEvent(model);
     this.onDeleteClick();
+    this.onEditButtonClick();
   }
 
   renderCardsView(model) {
     this.cardsWrapper.innerHTML = "";
+    console.log("===")
     model.getProductData().forEach((element) => {
       this.cardsWrapper.innerHTML += this.markUpHelper(element);
     });
+    this.onDeleteClick();
+    this.onEditButtonClick();
   }
 
   markUpHelper(element) {
@@ -99,10 +142,10 @@ class View {
             ${element.productID}
             </h5>
             <p class="card-text">
-              ${element.productDetails}
+            ${element.productDetails}
             </p>
-            <button type="button" class="btn btn-primary w-50 mb-3">Edit</button>
-            <button type="button"  class="btn btn-danger w-50 mb-3 delete-button">Delete</button>
+            <button type="button" class="btn btn-primary w-50 mb-3 edit-button" data-bs-toggle="modal" data-bs-target="#staticBackdrop" data-custom-id="${element.productID}">Edit</button>
+            <button type="button" class="btn btn-danger w-50 mb-3 delete-button" data-custom-id="${element.productID}">Delete</button>
           </div>
         </div>
       </div>`;
@@ -125,10 +168,28 @@ class Controller {
     this.model.setProductData(data);
   }
 
-  deleteProduct(id){
-    this.model.deleteProductData(id);
-    console.log("In controller delete Function")
+  deleteProduct(id) {
+    this.model.productData = this.model.productData.filter(
+      (product) => product.productID !== id
+    );
+    this.model.deleteProductData();
+    console.log("In controller delete Function");
     this.view.renderCardsView(model);
+  }
+
+
+  updateProduct(product, id) {
+    let indexOfExistingProduct = this.model.productData.find(product => product.productID === id);
+    console.log(indexOfExistingProduct);
+    // Now we want to replace an existing object with updated object
+    this.model.productData.splice(indexOfExistingProduct, 1, product);
+    this.model.updateProductData();
+  }
+
+  findProduct(id) {
+    let indexOfExistingProduct = this.model.productData.findIndex(product => product.productID === id);
+    console.log(this.model.productData)
+    return this.model.productData[indexOfExistingProduct];
   }
 }
 
