@@ -64,7 +64,7 @@ class View {
     // document.querySelector(`${classPrefix}.product-image-input`).value = product.productImage;
     document.querySelector(`${classPrefix}.img-add-preview`).setAttribute('src' , product.productImage);
   }
-  
+
   //   ----------_ Event Handlers--------
   onSubmitEvent() {
     console.log(this.submitForm);
@@ -87,9 +87,8 @@ class View {
         console.log("=== product buffer object ===", productBuffer)
         this.fillExistingDataIntoEditForm(productBuffer);
 
-        this.onUpdateButtonClick();
+        
         // this.controller.deleteProduct(id);
-        // this.controller.updateProduct({}, );
       });
     });
   }
@@ -118,6 +117,7 @@ class View {
     document.querySelector(`${classPrefix}.product-image-input`).addEventListener("change", ()=>{
       let files = document.querySelector(`${classPrefix}.product-image-input`).files[0];
       this.controller.convertImageToBase64URL(classPrefix,this.storeBase64URL, files);
+      // Below line will print undefined because FileReader promise is still pending
       console.log(this.imgBase64URL);
     })
   }
@@ -127,6 +127,15 @@ class View {
     context.imgBase64URL = url
     console.log(url);
     // return url;
+  }
+
+  onSearchBarInput(){
+    document.querySelector(".filter-query").addEventListener("input", (e)=>{
+      console.log("=== Searching .. ===")
+      this.controller.filterProductList(e.target.value);
+      this.renderCardsView(this.controller.model);
+
+    })
   }
 
   init(model) {
@@ -142,16 +151,19 @@ class View {
     this.onImageInput(`.update-form > div > `)
     this.onDeleteClick();
     this.onEditButtonClick();
+    this.onUpdateButtonClick();
+    this.onSearchBarInput();
   }
 
-  renderCardsView(model) {
+  renderCardsView(model) { // products to be added==========
     this.cardsWrapper.innerHTML = "";
-    console.log("===")
+    // console.log("===")
+    // products=====================================
     model.getProductData().forEach((element) => {
       this.cardsWrapper.innerHTML += this.markUpHelper(element);
     });
+    // Go through defination of below listed function once to avoid unneccesary rendering
     this.onDeleteClick();
-
     this.onEditButtonClick();
   }
 
@@ -205,9 +217,13 @@ class Controller {
   updateProduct(product, id) {
     let indexOfExistingProduct = this.model.productData.findIndex(product => product.productID === id);
     console.log(indexOfExistingProduct);
+    if(indexOfExistingProduct < 0){
+      return;
+    }
     // Now we want to replace an existing object with updated object
     this.model.productData.splice(indexOfExistingProduct, 1, product);
     this.model.updateProductData();
+    return this.model.productData;
   }
 
   findProduct(id) {
@@ -222,16 +238,18 @@ class Controller {
       const fileReader = new FileReader();
       fileReader.readAsDataURL(files);
       fileReader.addEventListener("load", function () {
-        // let imgPreview = document.querySelector(`${classPrefix}.img-preview`);
-        // imgPreview.style.display = "block";
-        // imgPreview.innerHTML = '<img src="' + this.result + '" class="" />';
       document.querySelector(`${classPrefix}.img-preview > .img-add-preview`).setAttribute('src', this.result);
-
         // To store value in outer scope of Event listener callback function
-        console.log(context.view)
         callbackFn(this.result, context.view);
       });     
     }
+  }
+
+  filterProductList(queryString){
+    this.model.productData = this.model.productData.filter((product)=>{
+      console.log(product)
+      return product.productID.includes(queryString);
+    })
   }
 }
 
