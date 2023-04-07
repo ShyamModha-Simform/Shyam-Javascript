@@ -71,8 +71,8 @@ class View {
     this.submitForm.addEventListener("click", (e) => {
       // context
       // console.log("Onclick performed", this.readDataFromInputs(`.add-product-form > div > `));
-      this.controller.setDataIntoModel(this.readDataFromInputs(`.add-product-form `));
-      this.renderCardsView(model);
+      const productBuffer = this.controller.setDataIntoModel(this.readDataFromInputs(`.add-product-form `));
+      this.renderCardsView( productBuffer);
     });
   }
 
@@ -97,8 +97,8 @@ class View {
     const submitUpdates = document.querySelector(".submit-updated-product");
     console.log(submitUpdates);
     submitUpdates.addEventListener("click", ()=>{
-      this.controller.updateProduct(this.readDataFromInputs(`.update-form `),this.selectedProductID)
-      this.renderCardsView(this.controller.model);
+      const productsBuffer = this.controller.updateProduct(this.readDataFromInputs(`.update-form `),this.selectedProductID)
+      this.renderCardsView( productsBuffer); // Added to fix renderView ---remove once it started working
     })
   }
 
@@ -130,10 +130,14 @@ class View {
   }
 
   onSearchBarInput(){
+    // OPTIMIZATION:-- BY debouncing we can reduce number of time function called
     document.querySelector(".filter-query").addEventListener("input", (e)=>{
       console.log("=== Searching .. ===")
-      this.controller.filterProductList(e.target.value);
-      this.renderCardsView(this.controller.model);
+      const selectTag = document.querySelector(".select-filter-params");
+      const filterAttribute = selectTag.options[selectTag.selectedIndex].getAttribute("data-custom-attribute");
+      console.log("===  ===", filterAttribute);
+      const fliteredProductsBuffer = this.controller.filterProductList(e.target.value, filterAttribute);
+      this.renderCardsView(fliteredProductsBuffer);
 
     })
   }
@@ -155,11 +159,9 @@ class View {
     this.onSearchBarInput();
   }
 
-  renderCardsView(model) { // products to be added==========
+  renderCardsView(products) {
     this.cardsWrapper.innerHTML = "";
-    // console.log("===")
-    // products=====================================
-    model.getProductData().forEach((element) => {
+    products.forEach((element) => {
       this.cardsWrapper.innerHTML += this.markUpHelper(element);
     });
     // Go through defination of below listed function once to avoid unneccesary rendering
@@ -202,6 +204,7 @@ class Controller {
   }
   setDataIntoModel(data) {
     this.model.setProductData(data);
+    return this.model.productData;
   }
 
   deleteProduct(id) {
@@ -210,7 +213,7 @@ class Controller {
     );
     this.model.deleteProductData();
     console.log("In controller delete Function");
-    this.view.renderCardsView(model);
+    this.view.renderCardsView(this.model.productData);
   }
 
 
@@ -223,7 +226,7 @@ class Controller {
     // Now we want to replace an existing object with updated object
     this.model.productData.splice(indexOfExistingProduct, 1, product);
     this.model.updateProductData();
-    return this.model.productData;
+    return this.model.productData;  // Added to fix renderView ---remove once it is working find
   }
 
   findProduct(id) {
@@ -245,11 +248,11 @@ class Controller {
     }
   }
 
-  filterProductList(queryString){
-    this.model.productData = this.model.productData.filter((product)=>{
+  filterProductList(queryString, filterAttribute){
+    return this.model.productData.filter((product)=>{
       console.log(product)
-      return product.productID.includes(queryString);
-    })
+      return product[`${filterAttribute}`].includes(queryString);
+    });
   }
 }
 
