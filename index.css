@@ -1,3 +1,15 @@
 /* .input-form-container {
     width: 50%;
 } */
+
+.add-product-form {
+    width: min(90%, 658px);
+}
+
+.img-preview {
+    width: 150px;
+}
+
+.img-custom-css{
+    object-fit: contain;
+}

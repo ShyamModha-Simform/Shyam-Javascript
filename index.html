@@ -70,7 +70,11 @@
                     class="form-control product-image-input"
                     type="file"
                     id="formFile"
+                    title="Please Choose a file"
                   />
+                  <div class="my-3 mx-0 container img-preview">
+                    <img src="/placeholderImage.webp" class="img-thumbnail img-add-preview" alt="Nothing">
+                  </div>
                 </div>
         
                 <div class="form-floating mb-3">
@@ -114,7 +118,7 @@
       </div>
 
       <!-- INPUT FORM -->
-      <div class="input-form-container w-50 m-auto add-product-form">
+      <div class="input-form-container m-auto add-product-form">
         <div class="form-floating mb-3">
           <input
             type="text"
@@ -135,13 +139,16 @@
           <label for="floatingInput">Product ID</label>
         </div>
 
-        <div class="mb-3">
+        <div class="mb-3 w-50 d-inline-block">
           <label for="formFile" class="form-label">Product Image</label>
           <input
             class="form-control product-image-input"
             type="file"
             id="formFile"
           />
+          <div class="my-3 mx-0 container img-preview">
+            <img src="/placeholderImage.webp" class="img-thumbnail img-add-preview" alt="Nothing">
+          </div>
         </div>
 
         <div class="form-floating mb-3">

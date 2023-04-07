@@ -32,6 +32,7 @@ class View {
     this.controller = null;
     this.cardsWrapper;
     this.submitForm = document.querySelector(".product-submit");
+    // this.imgBase64URL = null;
   }
 
   initController(controller) {
@@ -41,31 +42,36 @@ class View {
   //   ----------------____Reading data from form and Adding to global array___-----------------
 
   readDataFromInputs(classPrefix) {
+    // console.log(this.controller.convertImageToBase64URL(classPrefix));
     // const classPrefix = `.add-product-form > div > `;
     return {
       productName: document.querySelector(`${classPrefix}.product-name-input`).value,
       productID: document.querySelector(`${classPrefix}.product-id-input`).value.trim(),
       productPrice: document.querySelector(`${classPrefix}.product-price-input`).value,
       productDetails: document.querySelector(`${classPrefix}.product-details-input`).value,
-      productImage: document.querySelector(`${classPrefix}.product-image-input`).value,
+      productFilePath: document.querySelector(`${classPrefix}.product-image-input`).files[0] ,
+      productImage: document.querySelector(`${classPrefix}.img-add-preview`).getAttribute('src'),
     };
   }
 
   fillExistingDataIntoEditForm(product) {
-    const classPrefix = `.update-form > div > `;
+    const classPrefix = `.update-form `;
+    console.log(product.productImage)
     document.querySelector(`${classPrefix}.product-name-input`).value = product.productName;
     document.querySelector(`${classPrefix}.product-id-input`).value = product.productID;
     document.querySelector(`${classPrefix}.product-price-input`).value = product.productPrice;
     document.querySelector(`${classPrefix}.product-details-input`).value = product.productDetails;
-    document.querySelector(`${classPrefix}.product-image-input`).value = product.productImage;
+    // document.querySelector(`${classPrefix}.product-image-input`).value = product.productImage;
+    document.querySelector(`${classPrefix}.img-add-preview`).setAttribute('src' , product.productImage);
   }
+  
   //   ----------_ Event Handlers--------
   onSubmitEvent() {
     console.log(this.submitForm);
     this.submitForm.addEventListener("click", (e) => {
       // context
       // console.log("Onclick performed", this.readDataFromInputs(`.add-product-form > div > `));
-      this.controller.setDataIntoModel(this.readDataFromInputs(`.add-product-form > div > `));
+      this.controller.setDataIntoModel(this.readDataFromInputs(`.add-product-form `));
       this.renderCardsView(model);
     });
   }
@@ -92,7 +98,7 @@ class View {
     const submitUpdates = document.querySelector(".submit-updated-product");
     console.log(submitUpdates);
     submitUpdates.addEventListener("click", ()=>{
-      this.controller.updateProduct(this.readDataFromInputs(`.update-form > div >`),this.selectedProductID)
+      this.controller.updateProduct(this.readDataFromInputs(`.update-form `),this.selectedProductID)
       this.renderCardsView(this.controller.model);
     })
   }
@@ -108,6 +114,21 @@ class View {
     });
   }
 
+  onImageInput(classPrefix){
+    document.querySelector(`${classPrefix}.product-image-input`).addEventListener("change", ()=>{
+      let files = document.querySelector(`${classPrefix}.product-image-input`).files[0];
+      this.controller.convertImageToBase64URL(classPrefix,this.storeBase64URL, files);
+      console.log(this.imgBase64URL);
+    })
+  }
+
+  storeBase64URL(url, context){
+    // this.imgBase64URL = url;
+    context.imgBase64URL = url
+    console.log(url);
+    // return url;
+  }
+
   init(model) {
     console.log(model);
     this.cardsWrapper = document.querySelector(".cards-wrapper");
@@ -117,6 +138,8 @@ class View {
 
     // registering event listeners at first initialization
     this.onSubmitEvent(model);
+    this.onImageInput(`.add-product-form > div > `)
+    this.onImageInput(`.update-form > div > `)
     this.onDeleteClick();
     this.onEditButtonClick();
   }
@@ -128,13 +151,14 @@ class View {
       this.cardsWrapper.innerHTML += this.markUpHelper(element);
     });
     this.onDeleteClick();
+
     this.onEditButtonClick();
   }
 
   markUpHelper(element) {
     return `<div class="col">
         <div class="card h-100">
-          <img src="pexels-fauxels-3184450.jpg" class="card-img-top" alt="..." />
+          <img src="${element.productImage}" class="card-img-top" alt="..." />
           <div class="card-body">
             <h5 class="card-title">${element.productName}</h5>
             <h5 class="card-price">${element.productPrice}</h5>
@@ -179,7 +203,7 @@ class Controller {
 
 
   updateProduct(product, id) {
-    let indexOfExistingProduct = this.model.productData.find(product => product.productID === id);
+    let indexOfExistingProduct = this.model.productData.findIndex(product => product.productID === id);
     console.log(indexOfExistingProduct);
     // Now we want to replace an existing object with updated object
     this.model.productData.splice(indexOfExistingProduct, 1, product);
@@ -190,6 +214,24 @@ class Controller {
     let indexOfExistingProduct = this.model.productData.findIndex(product => product.productID === id);
     console.log(this.model.productData)
     return this.model.productData[indexOfExistingProduct];
+  }
+
+  convertImageToBase64URL(classPrefix, callbackFn, files){
+    let context = this;
+    if (files) {
+      const fileReader = new FileReader();
+      fileReader.readAsDataURL(files);
+      fileReader.addEventListener("load", function () {
+        // let imgPreview = document.querySelector(`${classPrefix}.img-preview`);
+        // imgPreview.style.display = "block";
+        // imgPreview.innerHTML = '<img src="' + this.result + '" class="" />';
+      document.querySelector(`${classPrefix}.img-preview > .img-add-preview`).setAttribute('src', this.result);
+
+        // To store value in outer scope of Event listener callback function
+        console.log(context.view)
+        callbackFn(this.result, context.view);
+      });     
+    }
   }
 }
 
