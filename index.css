@@ -1,10 +1,13 @@
 /* .input-form-container {
     width: 50%;
 } */
-
+.navbar {
+    background-color: #BA90C6;
+}
 @import url('https://fonts.googleapis.com/css?family=Roboto');
 body{
     font-family: 'Roboto', sans-serif;
+    background-color: #eaddee;
 }
 h2{
     text-align: center;
@@ -19,7 +22,7 @@ h2{
 .card{
    max-width: 300px;
         height: 463px;
-    background: #198754;
+        background-color: #BA90C6;
     /* padding: 30px; */
      border-radius: 3px;
     box-sizing: border-box;
@@ -27,11 +30,8 @@ h2{
     margin:10px;
      box-shadow: rgb(50 50 93 / 25%) 0px 30px 60px -12px, rgb(0 0 0 / 30%) 0px 18px 36px -18px;
 }
-.card:nth-child(2){
+.card:nth-child(){
    background: #4181ee;
-}
-.card:last-child{
-   background: #673ab7;
 }
 .card-title{
     margin-top: 0;
@@ -39,6 +39,14 @@ h2{
     font-weight: 600;
     letter-spacing: 1.2px;
 }
+.read-more-span {
+    display: inline-block;
+}
+
+.hide-read-more {
+    display: none;
+}
+
 .card-content{
     font-size: 14px;
     letter-spacing: 0.5px;
@@ -47,6 +55,9 @@ h2{
     overflow: hidden;
     text-overflow: ellipsis;
 }
+
+/* .content-overflow */
+
 .card-btn{
     all: unset;
     display: block;
@@ -74,7 +85,7 @@ h2{
 }
 
 .card-image-wrapper{
-    width: 300px;
+    width: 298px;
     height: 200px;
 }
 
@@ -84,6 +95,23 @@ h2{
     object-fit: cover;
 }
 
+.btn-style-pink {
+    color: white;
+    background-color: #E8A0BF;
+}
+
+.btn-style-pink:hover {
+    color: whitesmoke;
+    background-color: #e697b9;
+}
+
+.hide-button {
+    display: none;
+}
+
+.empty-cart-msg > h2 {
+    color: #BA90C6;
+}
 
 .add-product-form {
     width: min(90%, 658px);
@@ -95,4 +123,28 @@ h2{
 
 .img-custom-css{
     object-fit: contain;
+}
+
+@media screen and (min-width:438px) {
+
+    .text-wrap{
+        text-overflow: clip;
+    }
+}
+
+.id-error {
+    animation: shake 300ms;
+    color: rgb(255, 35, 35);
+}
+
+@keyframes shake {
+    25% {
+        transform: translateX(4px);
+    }
+    50% {
+        transform: translateX(-4px);
+    }
+    75% {
+        transform: translateX(4px);
+    }
 }
