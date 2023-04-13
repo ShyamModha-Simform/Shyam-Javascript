@@ -54,7 +54,7 @@ class View {
   }
   // Initializing and Adding necessary Event handlers to give start to CRUD app
   init() {
-    // 
+    //
     this.controller.handleLocation();
     this.displayAddProductPage();
     this.onAddButtonClick();
@@ -87,19 +87,18 @@ class View {
 
     // FOR READ MORE:- Testing phase-------
     const cardContents = document.querySelectorAll(".card-content");
-    const readMoreButtons = document.querySelectorAll(".read-more-btn")
-    this.toggleReadMore(cardContents,readMoreButtons)
+    const readMoreButtons = document.querySelectorAll(".read-more-btn");
+    this.toggleReadMore(cardContents, readMoreButtons);
     // ---------
-    
+
     // Event listeners for Cards buttons
-    this.displayOverFlownText(cardContents,readMoreButtons);
+    this.displayOverFlownText(cardContents, readMoreButtons);
     this.onDeleteClick();
     this.onEditButtonClick();
   }
 
   // Helper function to add Dynamic HTML
   markUpHelper(element) {
-
     return `<div class="card">
     <div class="card-image-wrapper">
       <img src="${element.productImage}" class="card-img-top" alt="..." />
@@ -138,7 +137,6 @@ class View {
   }
 
   fillExistingDataIntoEditForm(classPrefix, product) {
-    // console.log(product.productImage);
     document.querySelector(`${classPrefix}.product-name-input`).value =
       product.productName;
     document.querySelector(`${classPrefix}.product-id-input`).value =
@@ -154,13 +152,14 @@ class View {
   }
 
   // Helper for toggling Read More button
-  toggleReadMore(listOfContent, listOfReadMores){
-    for(let i = 0; i < listOfContent.length; i++){
+  toggleReadMore(listOfContent, listOfReadMores) {
+    for (let i = 0; i < listOfContent.length; i++) {
       const cardContent = listOfContent[i];
       const readMoreButton = listOfReadMores[i];
-      const isOverFlown = cardContent.scrollHeight > cardContent.clientHeight || cardContent.scrollWidth > cardContent.clientWidth
-      console.log(isOverFlown);
-      if(isOverFlown){
+      const isOverFlown =
+        cardContent.scrollHeight > cardContent.clientHeight ||
+        cardContent.scrollWidth > cardContent.clientWidth;
+      if (isOverFlown) {
         cardContent.classList.add("content-overflown");
         readMoreButton.classList.remove("hide-read-more");
       }
@@ -172,7 +171,6 @@ class View {
     const element = document.querySelector(
       `.add-product-form > div > .product-id-input`
     );
-    console.log("=== Inside ID Validation ===");
     if (this.controller.isIDExist(element.value)) {
       element.classList.add("id-error");
       confirm("Please enter unique ID..");
@@ -189,7 +187,7 @@ class View {
   onSubmitForm(addNewProduct) {
     addNewProduct.addEventListener("submit", (e) => {
       e.preventDefault();
-      if(!this.validateID()){
+      if (!this.validateID()) {
         return;
       }
       const productBuffer = this.controller.setDataIntoModel(
@@ -209,17 +207,18 @@ class View {
   }
 
   // Read more/ Read less event listeners
-  displayOverFlownText(listOfContent,listOfReadMores){
-    for(let i = 0; i < listOfContent.length; i++){
+  displayOverFlownText(listOfContent, listOfReadMores) {
+    for (let i = 0; i < listOfContent.length; i++) {
       const cardContent = listOfContent[i];
       const readMoreButton = listOfReadMores[i];
-      
-      readMoreButton.addEventListener('click', ()=>{
-        cardContent.classList.toggle('wrap-content');
-        cardContent.classList.toggle('content-overflown');
+
+      readMoreButton.addEventListener("click", () => {
+        cardContent.classList.toggle("wrap-content");
+        cardContent.classList.toggle("content-overflown");
         const toCompare = readMoreButton.innerHTML;
-        readMoreButton.innerHTML = toCompare === "Read More" ? "Read Less" : "Read More";
-      })
+        readMoreButton.innerHTML =
+          toCompare === "Read More" ? "Read Less" : "Read More";
+      });
     }
   }
 
@@ -230,9 +229,7 @@ class View {
       editBtn.addEventListener("click", (e) => {
         // Be aware when changing `markUpHelper`
         this.selectedProductID = editBtn.getAttribute("data-custom-id");
-        console.log("=== Edit button ===", this.selectedProductID);
         let productBuffer = this.controller.findProduct(this.selectedProductID);
-        console.log("=== product buffer object ===", productBuffer);
         this.fillExistingDataIntoEditForm(`.update-form `, productBuffer);
 
         // this.controller.deleteProduct(id);
@@ -268,7 +265,6 @@ class View {
     document
       .querySelector(`${classPrefix}.product-image-input`)
       .addEventListener("change", () => {
-        console.log("TEMP:- Image input fired");
         let files = document.querySelector(`${classPrefix}.product-image-input`)
           .files[0];
         this.controller.convertImageToBase64URL(
@@ -277,7 +273,6 @@ class View {
           files
         );
         // Below line will print undefined because FileReader promise is still pending
-        console.log(this.imgBase64URL);
       });
   }
   // Coverting Read image file into BASE64 URL
@@ -290,12 +285,10 @@ class View {
   onSearchBarInput() {
     // OPTIMIZATION:-- BY debouncing we can reduce number of time function called
     document.querySelector(".filter-query").addEventListener("input", (e) => {
-      console.log("=== Searching .. ===");
       const selectTag = document.querySelector(".select-filter-params");
       const filterAttribute = selectTag.options[
         selectTag.selectedIndex
       ].getAttribute("data-custom-attribute");
-      console.log("===  ===", filterAttribute);
       const fliteredProductsBuffer = this.controller.filterProductList(
         e.target.value,
         filterAttribute
@@ -311,7 +304,6 @@ class View {
       sortTypeButton.innerHTML =
         sortTypeButton.innerHTML === "ASC" ? "DESC" : "ASC";
       let sortType = sortTypeButton.innerHTML;
-      console.log(sortTypeButton.innerHTML);
       const selectTag = document.querySelector(".select-sort-params");
       const keyAttribute = selectTag.options[
         selectTag.selectedIndex
@@ -323,12 +315,9 @@ class View {
   }
 
   onInputIDValidation(classPrefix) {
-    let element = document.querySelector(`${classPrefix} .product-id-input`)
-    console.log("=== Inside ID Validation ===");
+    let element = document.querySelector(`${classPrefix} .product-id-input`);
     element.addEventListener("input", (e) => {
-      console.log(this.controller.isIDExist(e.target.value));
       if (this.controller.isIDExist(e.target.value)) {
-        console.log("mached");
         element.classList.add("id-error");
       } else {
         element.classList.remove("id-error");
@@ -353,11 +342,12 @@ class View {
           e.target.selectedIndex
         ].getAttribute("data-custom-attribute");
         this.renderCardsView(
-          this.controller.sortProductList(keyAttribute, sortType) 
+          this.controller.sortProductList(keyAttribute, sortType)
         ); //returns and copy of sorted array
       });
   }
-  displayAddProductPage() {   // To add neceessary things whenever ADD FORM is loaded
+  displayAddProductPage() {
+    // To add neceessary things whenever ADD FORM is loaded
     this.controller.waitForElm(".add-new-product").then((addNewProduct) => {
       console.log("=== Form is ready ===");
       this.onInputIDValidation(`.add-product-form > div > `);
@@ -395,7 +385,6 @@ class Controller {
       (product) => product.productID !== id
     );
     this.model.deleteProductData();
-    console.log("In controller delete Function");
     this.view.renderCardsView(this.model.productData);
   }
 
@@ -403,7 +392,7 @@ class Controller {
     let indexOfExistingProduct = this.model.productData.findIndex(
       (product) => product.productID === id
     );
-    console.log(indexOfExistingProduct);
+
     if (indexOfExistingProduct < 0) {
       return;
     }
@@ -417,7 +406,6 @@ class Controller {
     let indexOfExistingProduct = this.model.productData.findIndex(
       (product) => product.productID === id
     );
-    console.log(this.model.productData);
     return this.model.productData[indexOfExistingProduct];
   }
 
@@ -427,13 +415,11 @@ class Controller {
       const fileReader = new FileReader();
       fileReader.readAsDataURL(files);
       fileReader.addEventListener("load", function () {
-        console.log(this.result, "=== Inside callback")
         const tempBuffer = this.result;
         document
           .querySelector(`${classPrefix}.img-preview > .img-add-preview`)
           .setAttribute("src", tempBuffer); // Sometime direclty this.result won't update SRC
         // To store value in outer scope of Event listener callback function
-        console.log(context.view)
         callbackFn(tempBuffer, context.view);
       });
     }
@@ -441,7 +427,6 @@ class Controller {
 
   filterProductList(queryString, filterAttribute) {
     return this.model.productData.filter((product) => {
-      console.log(product);
       return product[`${filterAttribute}`].includes(queryString);
     });
   }
@@ -449,7 +434,7 @@ class Controller {
   sortProductList(attributeName, sortType) {
     // For Alphabets
     this.model.productData.sort((a, b) => {
-      if(attributeName === "productName"){
+      if (attributeName === "productName") {
         if (a[attributeName] < b[attributeName]) {
           return sortType === "ASC" ? -1 : 1;
         } else if (a[attributeName] > b[attributeName]) {
@@ -458,32 +443,31 @@ class Controller {
           return 0;
         }
       }
-        // For Numbers
-      else{
-          return sortType === "ASC" ? (a[attributeName] - b[attributeName]) : (b[attributeName] - a[attributeName]);
-        } 
-      });
-    
+      // For Numbers
+      else {
+        return sortType === "ASC"
+          ? a[attributeName] - b[attributeName]
+          : b[attributeName] - a[attributeName];
+      }
+    });
+
     return this.model.productData;
   }
 
   // ROUTING---------
   route(event) {
     event = event || window.event;
-    console.log(event);
     event.preventDefault();
-    console.log(window.history);
     window.history.pushState({}, "", event.target.href);
     this.handleLocation();
   }
 
-    // Fetching HTML from seperate file and displaying it
+  // Fetching HTML from seperate file and displaying it
   async addInnerHtml(routePath, id, title) {
-      const html = await fetch(routePath).then((data) => data.text());
-      document.getElementById(id).innerHTML = html;
-      document.title = title;
-      console.log("=== Add Product Form Loaded ===");
-    }
+    const html = await fetch(routePath).then((data) => data.text());
+    document.getElementById(id).innerHTML = html;
+    document.title = title;
+  }
 
   async handleLocation() {
     let path = window.location.pathname + window.location.hash;
@@ -495,7 +479,6 @@ class Controller {
     if (route === "/AddProduct.html") {
       // TOGGLE buttons for view and add
       document.querySelectorAll(`.navbar-nav .toggleButtons`).forEach((btn) => {
-        console.log(btn);
         btn.classList.add("hide-button");
       });
       document
@@ -503,9 +486,8 @@ class Controller {
         .classList.remove("hide-button");
       // Fetching html dynamically
       this.addInnerHtml(route, "dynamic-content", title);
-      console.log("Complete adding html");
       return;
-    } 
+    }
     // For Products display page
     else if (route === "/DisplayProduct.html") {
       // TOGGLE buttons for view and add
@@ -520,7 +502,6 @@ class Controller {
       this.waitForElm(".cards-wrapper").then((CardsWrapper) => {
         this.view.cardsWrapper = CardsWrapper;
         this.view.renderCardsView(this.model.productData);
-        console.log("=== Cards are ready ===");
       });
       return;
     }
@@ -531,9 +512,7 @@ class Controller {
   waitForElm(selector) {
     return new Promise((resolve) => {
       const observer = new MutationObserver((mutations) => {
-        console.log(mutations);
         if (document.querySelector(selector)) {
-          console.log("Inside observer");
           observer.disconnect();
           return resolve(document.querySelector(selector));
         }
@@ -548,7 +527,6 @@ class Controller {
 }
 
 let model = new Model();
-console.log(model.productData);
 let view = new View();
 let controller = new Controller(view, model);
 view.initController(controller);
