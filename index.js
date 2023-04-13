@@ -176,9 +176,11 @@ class View {
     if (this.controller.isIDExist(element.value)) {
       element.classList.add("id-error");
       confirm("Please enter unique ID..");
-      return;
+      element.value = "";
+      return false;
     } else {
       element.classList.remove("id-error");
+      return true;
     }
   }
 
@@ -187,7 +189,9 @@ class View {
   onSubmitForm(addNewProduct) {
     addNewProduct.addEventListener("submit", (e) => {
       e.preventDefault();
-      this.validateID();
+      if(!this.validateID()){
+        return;
+      }
       const productBuffer = this.controller.setDataIntoModel(
         this.readDataFromInputs(`.add-product-form `)
       );
