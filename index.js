@@ -15,7 +15,7 @@ class Model {
         file: "/AddProduct.html",
         title: "Add | CRUD",
       },
-      "/index.html#products": {
+      "/#products": {
         file: "/DisplayProduct.html",
         title: "Products | CRUD",
       },
