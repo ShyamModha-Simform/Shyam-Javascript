@@ -19,6 +19,10 @@ class Model {
         file: "/DisplayProduct.html",
         title: "Products | CRUD",
       },
+      "/index.html#products": {
+        file: "/DisplayProduct.html",
+        title: "Products | CRUD",
+      },
     };
     // Fetching products from Localstorage on load of webpage
     this.productData = JSON.parse(localStorage.getItem("productData")) || [];
