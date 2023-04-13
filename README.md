@@ -13,7 +13,15 @@ https://cosmic-rabanadas-8a0d06.netlify.app/
 
 ## UI Demo of above one:
 
-![App Screenshot](./img/image1.png)
-![App Screenshot](./img/image1.png)
-![App Screenshot](./img/image1.png)
+![App Screenshot](./README_Images/s1.png)
+#
+![App Screenshot](./README_Images/s2.png)
+#
+![App Screenshot](./README_Images/s3.png)
+#
+![App Screenshot](./README_Images/s4.png)
+#
+![App Screenshot](./README_Images/s5.png)
+#
+![App Screenshot](./README_Images/s6.png)
 
