@@ -76,15 +76,22 @@ class View {
     products.forEach((element) => {
       this.cardsWrapper.innerHTML += this.markUpHelper(element);
     });
-    let cardContent = document.querySelector(".card-content");
-    console.log(cardContent.value);
+
+    // FOR READ MORE:- Testing phase-------
+    const cardContents = document.querySelectorAll(".card-content");
+    const readMoreButtons = document.querySelectorAll(".read-more-btn")
+    this.toggleReadMore(cardContents,readMoreButtons)
+    // ---------
+    
     // Event listeners for Cards buttons
+    this.displayOverFlownText(cardContents,readMoreButtons);
     this.onDeleteClick();
     this.onEditButtonClick();
   }
 
   // Helper function to add Dynamic HTML
   markUpHelper(element) {
+
     return `<div class="card">
     <div class="card-image-wrapper">
       <img src="${element.productImage}" class="card-img-top" alt="..." />
@@ -93,7 +100,7 @@ class View {
       <h4 class="card-title">${element.productName}</h4>
       <h5 class="card-id">ID:${element.productID}</h5>
       <h6 class="card-price">Price: ${element.productPrice}</h6>
-		  <p class="card-content">${element.productDetails}<span class="read-more-span">Read More</span></p>
+		  <p class="card-content wrap-content">${element.productDetails}</p><p class="read-more-btn hide-read-more">Read More</p>
       <button type="button" class="btn mb-3 edit-button btn-style-pink" data-bs-toggle="modal" data-bs-target="#staticBackdrop" data-custom-id="${element.productID}">Edit</button>
       <button type="button" class="btn mb-3 delete-button btn-style-pink" data-custom-id="${element.productID}">Delete</button>
       </div>
@@ -101,7 +108,6 @@ class View {
   }
 
   readDataFromInputs(classPrefix) {
-    // console.log(this.controller.convertImageToBase64URL(classPrefix));
     // const classPrefix = `.add-product-form > div > `;
     return {
       productName: document.querySelector(`${classPrefix}.product-name-input`)
@@ -137,6 +143,20 @@ class View {
     document
       .querySelector(`${classPrefix}.img-add-preview`)
       .setAttribute("src", product.productImage);
+  }
+
+  // Helper for toggling Read More button
+  toggleReadMore(listOfContent, listOfReadMores){
+    for(let i = 0; i < listOfContent.length; i++){
+      const cardContent = listOfContent[i];
+      const readMoreButton = listOfReadMores[i];
+      const isOverFlown = cardContent.scrollHeight > cardContent.clientHeight || cardContent.scrollWidth > cardContent.clientWidth
+      console.log(isOverFlown);
+      if(isOverFlown){
+        cardContent.classList.add("content-overflown");
+        readMoreButton.classList.remove("hide-read-more");
+      }
+    }
   }
 
   // Validator for productID
@@ -175,6 +195,22 @@ class View {
       this.controller.handleLocation();
     });
   }
+
+  // Read more/ Read less event listeners
+  displayOverFlownText(listOfContent,listOfReadMores){
+    for(let i = 0; i < listOfContent.length; i++){
+      const cardContent = listOfContent[i];
+      const readMoreButton = listOfReadMores[i];
+      
+      readMoreButton.addEventListener('click', ()=>{
+        cardContent.classList.toggle('wrap-content');
+        cardContent.classList.toggle('content-overflown');
+        const toCompare = readMoreButton.innerHTML;
+        readMoreButton.innerHTML = toCompare === "Read More" ? "Read Less" : "Read More";
+      })
+    }
+  }
+
   // Card's Edit buttons
   onEditButtonClick() {
     this.editButtons = document.querySelectorAll(".edit-button");
@@ -236,7 +272,6 @@ class View {
   storeBase64URL(url, context) {
     // this.imgBase64URL = url;
     context.imgBase64URL = url;
-    console.log(url);
     // return url;
   }
   // For FILTER functionality
@@ -380,11 +415,14 @@ class Controller {
       const fileReader = new FileReader();
       fileReader.readAsDataURL(files);
       fileReader.addEventListener("load", function () {
+        console.log(this.result, "=== Inside callback")
+        const tempBuffer = this.result;
         document
           .querySelector(`${classPrefix}.img-preview > .img-add-preview`)
-          .setAttribute("src", this.rseult);
+          .setAttribute("src", tempBuffer); // Sometime direclty this.result won't update SRC
         // To store value in outer scope of Event listener callback function
-        callbackFn(this.result, context.view);
+        console.log(context.view)
+        callbackFn(tempBuffer, context.view);
       });
     }
   }
@@ -397,15 +435,23 @@ class Controller {
   }
 
   sortProductList(attributeName, sortType) {
+    // For Alphabets
     this.model.productData.sort((a, b) => {
-      if (a[attributeName] < b[attributeName]) {
-        return sortType === "ASC" ? -1 : 1;
-      } else if (a[attributeName] > b[attributeName]) {
-        return sortType === "ASC" ? 1 : -1;
-      } else {
-        return 0;
+      if(attributeName === "productName"){
+        if (a[attributeName] < b[attributeName]) {
+          return sortType === "ASC" ? -1 : 1;
+        } else if (a[attributeName] > b[attributeName]) {
+          return sortType === "ASC" ? 1 : -1;
+        } else {
+          return 0;
+        }
       }
-    });
+        // For Numbers
+      else{
+          return sortType === "ASC" ? (a[attributeName] - b[attributeName]) : (b[attributeName] - a[attributeName]);
+        } 
+      });
+    
     return this.model.productData;
   }
 
