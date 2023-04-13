@@ -7,6 +7,10 @@ class Model {
         file: "/404.html",
         title: "Error | CRUD",
       },
+      "/": {
+        file: "/AddProduct.html",
+        title: "Add | CRUD",
+      },
       "/index.html": {
         file: "/AddProduct.html",
         title: "Add | CRUD",
